@@ -40,7 +40,10 @@ struct CardView: View {
                 RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: lineWidth)
                 Text(self.card.content)
             } else {
-                RoundedRectangle(cornerRadius: cornerRadius).fill()
+                if !card.isMatched { //if card isMatched, don't draw it anymore
+                    RoundedRectangle(cornerRadius: cornerRadius).fill()
+                }
+                
             }
         }
         .font(Font.system(size: fontSize(for: size)))
