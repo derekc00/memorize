@@ -24,9 +24,9 @@ struct Grid<Item, ItemView>: View where Item: Identifiable, ItemView: View {
         
     }
     
-    func body(for size: GridLayout) -> some View {
+    func body(for layout: GridLayout) -> some View {
         ForEach(items) { item in
-            self.body(for: item, in: size)
+            self.body(for: item, in: layout)
         }
     }
     func body(for item: Item, in layout: GridLayout) -> some View {

@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct EmojiMemoryGameView: View {
+    //everytime this property receives objectwillchange, it redraws the view (reactive programming)
     @ObservedObject var viewModel: EmojiMemoryGame
     		
     var body: some View {
@@ -27,6 +28,7 @@ struct EmojiMemoryGameView: View {
 struct CardView: View {
     var card: MemoryGame<String>.Card
     
+    //computed property
     var body: some View {
         
         GeometryReader { geometry in
