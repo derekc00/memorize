@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UIKit
+import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
     
@@ -18,11 +18,11 @@ class EmojiMemoryGame: ObservableObject {
         
     static func createMemoryGame() -> MemoryGame<String> {
         
-        let themes: [([String], UIColor, String, Int)] = [(["😀", "😃", "😄","😂","😍", "🥰","😛","😇"], UIColor.yellow, "Faces", Int.random(in: 3..<8)),
-                      (["👊","✊","🤛","🤜","🤞","🤟","👐","🤝","💪"], UIColor.yellow, "Hands", Int.random(in: 3..<8)),
-                      (["🐶", "🐱","🐭","🐹","🐰","🐯","🐮","🐵","🐷","🦊","🐼"], UIColor.systemPink, "Animals", 4),
-                      (["☀️","🌤","🌧","🌩","❄️","☔️","🌥","☁️","🌦"], UIColor.blue, "Weather", 4),
-                      (["🍐","🥝","🥗","🥒","🍏","🍉","🥦","🥑","🥬"], UIColor.green,"Greens", Int.random(in: 3..<9))
+        let themes: [([String], Color, String, Int)] = [(["😀", "😃", "😄","😂","😍", "🥰","😛","😇"], Color.yellow, "Faces", Int.random(in: 3..<8)),
+                      (["👊","✊","🤛","🤜","🤞","🤟","👐","🤝","💪"], Color.yellow, "Hands", Int.random(in: 3..<8)),
+                      (["🐶", "🐱","🐭","🐹","🐰","🐯","🐮","🐵","🐷","🦊","🐼"], Color.pink, "Animals", 4),
+                      (["☀️","🌤","🌧","🌩","❄️","☔️","🌥","☁️","🌦"], Color.blue, "Weather", 4),
+                      (["🍐","🥝","🥗","🥒","🍏","🍉","🥦","🥑","🥬"], Color.green,"Greens", Int.random(in: 3..<9))
         ]
         var selectedTheme = themes[Int.random(in: 0..<themes.count)]
         selectedTheme.0.shuffle()
@@ -44,6 +44,9 @@ class EmojiMemoryGame: ObservableObject {
     
     var points: Int {
         return model.points
+    }
+    var isFinished: Bool {
+        return model.isFinished
     }
     
     // MARK: - Intent(s)

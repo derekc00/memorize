@@ -15,58 +15,62 @@ struct EmojiMemoryGameView: View {
     var body: some View {
         
         VStack {
-            GeometryReader { (proxy) in
-                HStack(alignment: .bottom){
+            HStack(alignment: .bottom){
+                
+                Text(String(describing: self.viewModel.theme.title))
                     
-                    
-                    Text(String(describing: self.viewModel.theme.title))
-                        
-                        .font(.largeTitle)
-                        .layoutPriority(2)
-                    Spacer()
-                    
-                    Text(String(describing: self.viewModel.points))
-                        .layoutPriority(1)
-                        .font(Font.custom("San Francisco", size: 35))
-                        .foregroundColor(Color.black)
-                    
-                        
-                    Spacer()
-                    
-                    Button(action: {
-                        print("New Game Button Pressed")
-                        self.viewModel.resetGame()
-                    }) {
-                        Text("New Game")
-                            .font(.headline)
-                    }
-                    .padding(.all, 12)
-                    .foregroundColor(.white)
-                        
-                    .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color.blue))
+                    .font(.largeTitle)
+                    .layoutPriority(2)
+                Spacer()
+                
+                Text(String(describing: self.viewModel.points))
                     .layoutPriority(1)
+                    .font(Font.custom("San Francisco", size: 35))
+                    .foregroundColor(Color.black)
+                
                     
-                    
+                Spacer()
+                
+                Button(action: {
+                    print("New Game Button Pressed")
+                    self.viewModel.resetGame()
+                }) {
+                    Text("New Game")
+                        .font(.headline)
                 }
+                .padding(.all, 12)
+                .foregroundColor(.white)
+                    
+                .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color.blue))
+                .layoutPriority(1)
+                
+                
+                
             }
             .frame(minWidth: nil, idealWidth: nil, maxWidth: nil, minHeight: 40, idealHeight: 40, maxHeight: 40, alignment: .center)
             .padding(EdgeInsets.init(top: 4, leading: 16, bottom: 4, trailing: 16))
             
-            
-            Grid(viewModel.cards) { card in
-                    CardView(card: card).onTapGesture {
-                        self.viewModel.choose(card: card)
-                    }
-                    .padding(5)
+            ZStack {
+                Grid(viewModel.cards) { card in
+                    CardView(card: card, themeColor: self.viewModel.theme.color).onTapGesture {
+                            self.viewModel.choose(card: card)
+                        }
+                        .padding(5)
+                        
+                }
+                .foregroundColor(self.viewModel.theme.color)
+                .padding()
+                
+                
             }
-            .foregroundColor(.orange)
-            .padding()
+            
         }
         
     }
 }
 struct CardView: View {
     var card: MemoryGame<String>.Card
+    var themeColor: Color
     
     //computed property
     var body: some View {
@@ -83,7 +87,14 @@ struct CardView: View {
                 Text(self.card.content)
             } else {
                 if !card.isMatched { //only draw if not face up and not Matched
-                    RoundedRectangle(cornerRadius: cornerRadius).fill()
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        
+                        .fill(LinearGradient(gradient: Gradient(colors: [.white, themeColor]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .border(Color.black, width: 1)
+                        .shadow(radius: 2)
+                    
+                    
+                    
                 }
                 
             }
