@@ -15,11 +15,43 @@ struct EmojiMemoryGameView: View {
     var body: some View {
         
         VStack {
-            HStack{
-                Text(String(describing: self.viewModel.theme.title))
-                    .font(.title)
-                
+            GeometryReader { (proxy) in
+                HStack(alignment: .bottom){
+                    
+                    
+                    Text(String(describing: self.viewModel.theme.title))
+                        
+                        .font(.largeTitle)
+                        .layoutPriority(2)
+                    Spacer()
+                    
+                    Text(String(describing: self.viewModel.points))
+                        .layoutPriority(1)
+                        .font(Font.custom("San Francisco", size: 35))
+                        .foregroundColor(Color.black)
+                    
+                        
+                    Spacer()
+                    
+                    Button(action: {
+                        print("New Game Button Pressed")
+                        self.viewModel.resetGame()
+                    }) {
+                        Text("New Game")
+                            .font(.headline)
+                    }
+                    .padding(.all, 12)
+                    .foregroundColor(.white)
+                        
+                    .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color.blue))
+                    .layoutPriority(1)
+                    
+                    
+                }
             }
+            .frame(minWidth: nil, idealWidth: nil, maxWidth: nil, minHeight: 40, idealHeight: 40, maxHeight: 40, alignment: .center)
+            .padding(EdgeInsets.init(top: 4, leading: 16, bottom: 4, trailing: 16))
+            
             
             Grid(viewModel.cards) { card in
                     CardView(card: card).onTapGesture {
@@ -50,7 +82,7 @@ struct CardView: View {
                 RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: lineWidth)
                 Text(self.card.content)
             } else {
-                if !card.isMatched { //if card isMatched, don't draw it anymore
+                if !card.isMatched { //only draw if not face up and not Matched
                     RoundedRectangle(cornerRadius: cornerRadius).fill()
                 }
                 
